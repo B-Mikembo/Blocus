@@ -6,7 +6,6 @@
 
 int main(int argc, char const *argv[])
 {
-    
     menu_window();
 
     return 0;

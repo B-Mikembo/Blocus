@@ -1,18 +1,15 @@
 #include "../includes/window.h"
 #include "../includes/menu.h"
 
-void display_username( int width, int height, char* texte1, char* texte2 ){
-    /*MLV_get_size_of_text( "BLOCUS", 250, 100);
-    int positionX = (width-250)/2, positionY = 10;
-    MLV_draw_text( positionX, positionY, "BLOCUS", MLV_COLOR_WHITE );*/
 
-    MLV_draw_adapted_text_box(
-        10, 10,
-        "BLOCUS",
-        9,
-        MLV_COLOR_ROYAL_BLUE, MLV_COLOR_WHITE, MLV_COLOR_ROYAL_BLUE,
-        MLV_TEXT_CENTER
-    );
+char* joueur1, *joueur2;
+
+void display_username( int width, int height, char* texte1, char* texte2 ){
+    int width_text, height_text; 
+    char* text = "BLOCUS";
+    MLV_get_size_of_text( text, &width_text, &height_text );
+    int positionX = (width-width_text)/2, positionY = 10;
+    MLV_draw_text( positionX, positionY, text, MLV_COLOR_WHITE );
 
     MLV_draw_text(
             10, 150,
