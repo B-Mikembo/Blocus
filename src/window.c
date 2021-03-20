@@ -1,5 +1,3 @@
-#include <MLV/MLV_all.h>
-
 #include "../includes/window.h"
 
 /**
@@ -27,6 +25,22 @@ int is_pressed_escape(){
     }
     
     return 0;
+}
+/**
+ * @brief Dessine un bouton pour régler la taille de la grille
+ * 
+ * @param message texte dans le bouton
+ * @param backgroundColor couleur de l'arrière-plan
+ */
+void draw_size_button(const char* message, MLV_Color backgroundColor){
+    int window_width = MLV_get_window_width();
+    int window_heigth = MLV_get_window_height();
+
+    int x_button = window_width / 4;
+    int y_button = window_width / 4;
+
+    MLV_draw_adapted_text_box(x_button,y_button,message,0,NULL,MLV_COLOR_WHITE,backgroundColor,MLV_TEXT_LEFT);
+    MLV_actualise_window();
 }
 
 void close_window(){
