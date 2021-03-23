@@ -7,7 +7,7 @@
 
 void menu_window(){
     create_window("Menu Blocus", WIDTH, HEIGHT);
-    draw_size_button("3",COLOR_BUTTON);
+    draw_size_buttons();
     do{
         
     }while(!is_pressed_escape());

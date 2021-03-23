@@ -32,14 +32,30 @@ int is_pressed_escape(){
  * @param message texte dans le bouton
  * @param backgroundColor couleur de l'arrière-plan
  */
-void draw_size_button(const char* message, MLV_Color backgroundColor){
-    int window_width = MLV_get_window_width();
-    int window_heigth = MLV_get_window_height();
+void draw_size_buttons(){
+    int width = MLV_get_window_width();
+    int height = MLV_get_window_height();
+    int resizer = 4;
+    
+    MLV_Image *three_image = MLV_load_image("img/three.png");;
+    MLV_Image *nine_image = MLV_load_image("img/nine.png");
 
-    int x_button = window_width / 4;
-    int y_button = window_width / 4;
+    
+    MLV_resize_image_with_proportions(three_image, width / resizer, height / resizer);
+    MLV_resize_image_with_proportions(nine_image, width / resizer, height / resizer);
 
-    MLV_draw_adapted_text_box(x_button,y_button,message,0,NULL,MLV_COLOR_WHITE,backgroundColor,MLV_TEXT_LEFT);
+
+    int x_three = width / 8;
+    int y_three = height / 2;
+
+    int x_nine = (width / 2) + (width / 8);
+    int y_nine = height / 2;
+    /**
+     * @brief Affichage de l'image
+     * 
+     */
+    MLV_draw_image(three_image,x_three,y_three);
+    MLV_draw_image(nine_image,x_nine,y_nine);
     MLV_actualise_window();
 }
 
