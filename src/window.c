@@ -29,31 +29,15 @@ int is_pressed_escape(){
 /**
  * @brief Dessine un bouton pour régler la taille de la grille
  */
-void draw_size_buttons(){
-    int width = MLV_get_window_width();
-    int height = MLV_get_window_height();
-    int resizer = 4;
+void draw_size_buttons(Size_Button *first_button, Size_Button *second_button){
     
-    MLV_Image *three_image = MLV_load_image("img/three.png");;
-    MLV_Image *nine_image = MLV_load_image("img/nine.png");
-
-    
-    MLV_resize_image_with_proportions(three_image, width / resizer, height / resizer);
-    MLV_resize_image_with_proportions(nine_image, width / resizer, height / resizer);
-
-
-    int x_three = width / 8;
-    int y_three = height / 2;
-
-    int x_nine = (width / 2) + (width / 8);
-    int y_nine = height / 2;
-    /**
-     * @brief Affichage de l'image
-     * 
-     */
-    MLV_draw_image(three_image,x_three,y_three);
-    MLV_draw_image(nine_image,x_nine,y_nine);
+    MLV_draw_image(first_button->image,first_button->x_pos, first_button->y_pos);
+    MLV_draw_image(second_button->image,second_button->x_pos, second_button->y_pos);
     MLV_actualise_window();
+}
+
+void free_image(MLV_Image *image){
+    MLV_free_image(image);
 }
 
 void close_window(){
