@@ -28,9 +28,6 @@ int is_pressed_escape(){
 }
 /**
  * @brief Dessine un bouton pour régler la taille de la grille
- * 
- * @param message texte dans le bouton
- * @param backgroundColor couleur de l'arrière-plan
  */
 void draw_size_buttons(){
     int width = MLV_get_window_width();
