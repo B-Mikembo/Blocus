@@ -4,36 +4,8 @@
 #define WIDTH           500
 #define HEIGHT          500
 
-Grid_Menu *grid_menu;
 Size_Button *three_button;
 Size_Button *nine_button;
-
-void create_grid_menu(){
-    int i, j;
-    grid_menu = (Grid_Menu *)malloc(sizeof(Grid_Menu));
-    grid_menu->x_size = 2;
-    grid_menu->y_size = 2;
-    grid_menu->cells = (Cell_Menu *)malloc(grid_menu->x_size*sizeof(Cell_Menu *));
-    for(i = 0; i < grid_menu->x_size; i++){
-        grid_menu->cells[i] = (Cell_Menu *) malloc(grid_menu->y_size*sizeof(Cell_Menu));
-    }
-
-    for(j = 0; j < grid_menu->y_size; j++){
-        for(i = 0; i < grid_menu->x_size; i++){
-            grid_menu->cells[i][j].x_pos = i;
-            grid_menu->cells[i][j].y_pos = j;
-        }
-    }
-}
-
-void free_grid_menu(Grid_Menu *grid_menu){
-    int i;
-    for(i = 0; i < grid_menu->x_size; i++){
-        free(grid_menu->cells[i]);
-    }
-    free(grid_menu->cells);
-    free(grid_menu);
-}
 
 void free_button(Size_Button *button){
     MLV_free_image(button->image);
@@ -77,13 +49,32 @@ void init_size_buttons(){
 void menu_window(){
     
     create_window("Menu Blocus", WIDTH, HEIGHT);
-    create_grid_menu();
     init_size_buttons();
+    printf("x pos nine : %d\n", nine_button->x_pos);
     draw_size_buttons(three_button, nine_button);
+    MLV_Event event = MLV_NONE;
+    MLV_Mouse_button mouse_button;
+    int x_pixel;
+    int y_pixel;
     do{
-    
+        event = MLV_wait_event(
+            NULL,
+            NULL,
+            NULL,
+            NULL,
+            NULL,
+            &x_pixel,
+            &y_pixel,
+            &mouse_button,
+            NULL
+        );
+        /* fonctionne */
+        if(event == MLV_MOUSE_BUTTON){
+            if(x_pixel >= three_button->x_pos && x_pixel <= (three_button->x_pos + three_button->width)){
+                printf("%d\n", three_button->value);
+            }
+        }
     }while(!is_pressed_escape());
-    free_grid_menu(grid_menu);
     free_button(three_button);
     free_button(nine_button);
     close_window();
