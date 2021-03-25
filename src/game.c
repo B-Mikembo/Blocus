@@ -17,7 +17,7 @@ void display_grid(int size){
     MLV_draw_line(x_start, y_start, x_end, y_start, MLV_COLOR_WHITE);
     MLV_draw_line(x_start, y_start, x_start, y_end, MLV_COLOR_WHITE);
     MLV_draw_line(x_end, y_start, x_end, y_end, MLV_COLOR_WHITE);
-    MLV_draw_line(x_end, y_end, x_end, y_end, MLV_COLOR_WHITE);
+    MLV_draw_line(x_start, y_end, x_end, y_end, MLV_COLOR_WHITE);
 
     int cell_size = grid_size/size;
     int i;
@@ -25,6 +25,7 @@ void display_grid(int size){
         MLV_draw_line(x_start+(cell_size*i), y_start, x_start+(cell_size*i), y_end, MLV_COLOR_WHITE);
         MLV_draw_line(x_start, y_start+(cell_size*i), x_end, y_start+(cell_size*i), MLV_COLOR_WHITE);
     } 
-    
+
     MLV_actualise_window();
+    MLV_wait_seconds( 60 );
 }
