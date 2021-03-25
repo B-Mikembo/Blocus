@@ -158,12 +158,13 @@ void init_size_buttons()
     /**
      * Initialisation du bouton "Play"
     */
-    int width_box, height_box;
+    int width_box = 0;
+    int height_box = 0;
     play_button->message = "JOUER";
-    MLV_get_size_of_adapted_text_box(play_button->message,0,width_box, height_box);
+    MLV_get_size_of_adapted_text_box(play_button->message,0,&width_box, &height_box);
     play_button->value = 1;
-    play_button->height = height / 4;
-    play_button->width = width / 8;
+    play_button->height = height_box;
+    play_button->width = width_box;
     play_button->image = NULL;
     play_button->x_pos = (three_button->x_pos+three_button->width);
     play_button->y_pos = height - (height / 4);
