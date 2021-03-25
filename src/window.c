@@ -29,7 +29,7 @@ int is_pressed_escape(){
 /**
  * @brief Dessine un bouton pour régler la taille de la grille
  */
-void draw_size_buttons(Size_Button *first_button, Size_Button *second_button){
+void draw_size_buttons(Button *first_button, Button *second_button){
     
     MLV_draw_image(first_button->image,first_button->x_pos, first_button->y_pos);
     MLV_draw_image(second_button->image,second_button->x_pos, second_button->y_pos);

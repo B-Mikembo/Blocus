@@ -4,11 +4,12 @@
 #define WIDTH 500
 #define HEIGHT 500
 
-Size_Button *three_button;
-Size_Button *nine_button;
+Button *three_button;
+Button *nine_button;
+
 int grid_size;
 
-void free_button(Size_Button *button)
+void free_button(Button *button)
 {
     MLV_free_image(button->image);
     free(button);
@@ -97,8 +98,8 @@ int get_value_of_size_button(int x_pos, int y_pos)
  */
 void init_size_buttons()
 {
-    three_button = (Size_Button *)malloc(sizeof(Size_Button));
-    nine_button = (Size_Button *)malloc(sizeof(Size_Button));
+    three_button = (Button *)malloc(sizeof(Button));
+    nine_button = (Button *)malloc(sizeof(Button));
 
     int width = MLV_get_window_width();
     int height = MLV_get_window_height();
