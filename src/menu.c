@@ -13,6 +13,9 @@ Button *play_button;
 
 int grid_size;
 
+char *name_player1;
+char *name_player2;
+
 void free_button(Button *button)
 {
     MLV_free_image(button->image);
@@ -173,8 +176,15 @@ void init_size_buttons()
 
 }
 
-void display_username(int width, int height, char *texte1, char *texte2)
+void display_username(int width, int height)
 {
+    if(name_player1 == NULL){
+        name_player1 = "";
+    }
+
+    if(name_player2 == NULL){
+        name_player2 = "";
+    }
 
     MLV_clear_window(MLV_COLOR_ROYAL_BLUE);
     MLV_draw_adapted_text_box(
@@ -185,12 +195,12 @@ void display_username(int width, int height, char *texte1, char *texte2)
         MLV_TEXT_CENTER);
     MLV_draw_text(
         10, 150,
-        texte1,
+        name_player1,
         MLV_COLOR_WHITE);
 
     MLV_draw_text(
         220, 150,
-        texte2,
+        name_player2,
         MLV_COLOR_WHITE);
 
     MLV_draw_all_input_boxes();
@@ -210,7 +220,6 @@ void menu_window()
     draw_buttons(three_button, nine_button, play_button);
     int width = 640, height = 460;
     char *texte, *texte1, *texte2;
-    char *joueur1, *joueur2;
     int x_pixel;
     int y_pixel;
     MLV_Input_box *input_box, *input_box_1, *input_box_2;
@@ -230,7 +239,7 @@ void menu_window()
         MLV_COLOR_ROYAL_BLUE, "JOUEUR 2 : ");
     texte2 = (char *)malloc(1 * sizeof(char));
     *texte2 = '\0';
-    display_username(width, height, texte1, texte2);
+    display_username(width, height);
     do
     {
         event = MLV_get_event(
@@ -238,23 +247,28 @@ void menu_window()
             &texte, &input_box,
             &x_pixel, &y_pixel, NULL,
             NULL);
+        /**
+         * Si input box est rempli
+        */
         if (event == MLV_INPUT_BOX)
         {
             if (input_box == input_box_1)
             {
                 free(texte1);
                 texte1 = texte;
-                joueur1 = texte1;
-                printf("%s\n", joueur1);
+                name_player1 = texte1;
             }
             if (input_box == input_box_2)
             {
                 free(texte2);
                 texte2 = texte;
-                joueur2 = texte2;
-                printf("%s\n", joueur2);
+                name_player2 = texte2;
             }
         }
+
+        /**
+         * Si un click de souris
+        */
         else if (event == MLV_MOUSE_BUTTON)
         {
             if(check_into_three_button(x_pixel,y_pixel) || check_into_nine_button(x_pixel,y_pixel)){
@@ -262,12 +276,18 @@ void menu_window()
                 printf("%d\n", grid_size);
             }
             
-            if(check_into_play_button(x_pixel, y_pixel)){
+            if(check_into_play_button(x_pixel, y_pixel) && play_button->enable){
                 printf("SAHUT !\n");
             }
         }
-        display_username(width, height, texte1, texte2);
-    } while (strcmp(texte2, "quit") || !is_pressed_escape());
+        
+        if(name_player1 != NULL && name_player1 != "" && name_player2 != NULL && name_player2 != ""){
+            if(grid_size != 0){
+                play_button->enable = 1;
+            }
+        }
+        display_username(width, height);
+    } while (strcmp(texte2, "quit"));
     free(texte1);
     free(texte2);
     MLV_free_input_box(input_box_1);
