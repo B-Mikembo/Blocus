@@ -265,6 +265,10 @@ void menu_window()
                 name_player2 = texte2;
             }
         }
+
+        /**
+         * Si un click de souris
+        */
         else if (event == MLV_MOUSE_BUTTON)
         {
             if(check_into_three_button(x_pixel,y_pixel) || check_into_nine_button(x_pixel,y_pixel)){
