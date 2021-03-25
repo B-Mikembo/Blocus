@@ -4,8 +4,12 @@
 #define WIDTH 500
 #define HEIGHT 500
 
+/**
+ * Variables globales
+*/
 Button *three_button;
 Button *nine_button;
+Button *play_button;
 
 int grid_size;
 
@@ -13,6 +17,23 @@ void free_button(Button *button)
 {
     MLV_free_image(button->image);
     free(button);
+}
+
+/**
+ * Vérification du click sur le bouton "Play"
+*/
+int check_into_play_button(int x_pos, int y_pos){
+    int result = 0;
+
+    if (x_pos >= play_button->x_pos && x_pos <= (play_button->x_pos + play_button->width))
+    {
+        if (y_pos >= play_button->y_pos && y_pos <= (play_button->y_pos + play_button->height))
+        {
+            result = 1;
+        }
+    }
+
+    return result;
 }
 
 /**
@@ -98,29 +119,57 @@ int get_value_of_size_button(int x_pos, int y_pos)
  */
 void init_size_buttons()
 {
+    /**
+     * Allocation de mémoire pour les boutons
+    */
     three_button = (Button *)malloc(sizeof(Button));
     nine_button = (Button *)malloc(sizeof(Button));
+    play_button = (Button *)malloc(sizeof(Button));
 
     int width = MLV_get_window_width();
     int height = MLV_get_window_height();
 
+    /**
+     * Initialisation du bouton "3"
+    */
     three_button->value = 3;
     three_button->height = height / 4;
     three_button->width = width / 4;
     three_button->image = MLV_load_image("img/three.png");
     three_button->x_pos = width / 8;
     three_button->y_pos = height / 2;
+    three_button->enable = 1;
 
     MLV_resize_image_with_proportions(three_button->image, three_button->width, three_button->height);
 
+    /**
+     * Initialisation du bouton "9"
+    */
     nine_button->value = 9;
     nine_button->height = height / 4;
     nine_button->width = width / 4;
     nine_button->image = MLV_load_image("img/nine.png");
     nine_button->x_pos = (width / 2) + (width / 8);
     nine_button->y_pos = height / 2;
+    nine_button->enable = 1;
 
     MLV_resize_image_with_proportions(nine_button->image, nine_button->width, nine_button->height);
+
+    /**
+     * Initialisation du bouton "Play"
+    */
+    int width_box, height_box;
+    play_button->message = "JOUER";
+    MLV_get_size_of_adapted_text_box(play_button->message,0,width_box, height_box);
+    play_button->value = 1;
+    play_button->height = height / 4;
+    play_button->width = width / 8;
+    play_button->image = NULL;
+    play_button->x_pos = (three_button->x_pos+three_button->width);
+    play_button->y_pos = height - (height / 4);
+    play_button->enable = 0;
+    
+
 }
 
 void display_username(int width, int height, char *texte1, char *texte2)
@@ -144,7 +193,7 @@ void display_username(int width, int height, char *texte1, char *texte2)
         MLV_COLOR_WHITE);
 
     MLV_draw_all_input_boxes();
-    draw_size_buttons(three_button, nine_button);
+    draw_buttons(three_button, nine_button, play_button);
     MLV_actualise_window();
 }
 
@@ -157,7 +206,7 @@ void menu_window()
     create_window("Menu Blocus", 500, 500);
     init_size_buttons();
     printf("x pos nine : %d\n", nine_button->x_pos);
-    draw_size_buttons(three_button, nine_button);
+    draw_buttons(three_button, nine_button, play_button);
     int width = 640, height = 460;
     char *texte, *texte1, *texte2;
     char *joueur1, *joueur2;
@@ -205,10 +254,16 @@ void menu_window()
                 printf("%s\n", joueur2);
             }
         }
-        else if (event == MLV_MOUSE_BUTTON && (check_into_three_button(x_pixel,y_pixel) || check_into_nine_button(x_pixel,y_pixel)))
+        else if (event == MLV_MOUSE_BUTTON)
         {
-            grid_size = get_value_of_size_button(x_pixel, y_pixel);
-            printf("%d\n", grid_size);
+            if(check_into_three_button(x_pixel,y_pixel) || check_into_nine_button(x_pixel,y_pixel)){
+                grid_size = get_value_of_size_button(x_pixel, y_pixel);
+                printf("%d\n", grid_size);
+            }
+            
+            if(check_into_play_button(x_pixel, y_pixel)){
+                printf("SAHUT !\n");
+            }
         }
         display_username(width, height, texte1, texte2);
     } while (strcmp(texte2, "quit") || !is_pressed_escape());
@@ -219,5 +274,6 @@ void menu_window()
 
     free_button(three_button);
     free_button(nine_button);
+    free_button(play_button);
     close_window();
 }
