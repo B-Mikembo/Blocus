@@ -23,6 +23,23 @@ void free_button(Button *button)
 }
 
 /**
+ * Vérification du click sur le bouton "Play"
+*/
+int check_into_play_button(int x_pos, int y_pos){
+    int result = 0;
+
+    if (x_pos >= play_button->x_pos && x_pos <= (play_button->x_pos + play_button->width))
+    {
+        if (y_pos >= play_button->y_pos && y_pos <= (play_button->y_pos + play_button->height))
+        {
+            result = 1;
+        }
+    }
+
+    return result;
+}
+
+/**
  * @brief 
  * 
  * @param x_pos 
@@ -248,10 +265,6 @@ void menu_window()
                 name_player2 = texte2;
             }
         }
-
-        /**
-         * Si un click de souris
-        */
         else if (event == MLV_MOUSE_BUTTON)
         {
             if(check_into_three_button(x_pixel,y_pixel) || check_into_nine_button(x_pixel,y_pixel)){
