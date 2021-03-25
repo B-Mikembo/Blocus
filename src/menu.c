@@ -23,23 +23,6 @@ void free_button(Button *button)
 }
 
 /**
- * Vérification du click sur le bouton "Play"
-*/
-int check_into_play_button(int x_pos, int y_pos){
-    int result = 0;
-
-    if (x_pos >= play_button->x_pos && x_pos <= (play_button->x_pos + play_button->width))
-    {
-        if (y_pos >= play_button->y_pos && y_pos <= (play_button->y_pos + play_button->height))
-        {
-            result = 1;
-        }
-    }
-
-    return result;
-}
-
-/**
  * @brief 
  * 
  * @param x_pos 
