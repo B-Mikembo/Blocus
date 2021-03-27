@@ -129,8 +129,8 @@ void init_size_buttons()
     nine_button = (Button *)malloc(sizeof(Button));
     play_button = (Button *)malloc(sizeof(Button));
 
-    int width = MLV_get_window_width();
-    int height = MLV_get_window_height();
+    int width = WIDTH;
+    int height = HEIGHT;
 
     /**
      * Initialisation du bouton "3"
@@ -277,7 +277,7 @@ void menu_window()
             }
             
             if(check_into_play_button(x_pixel, y_pixel) && play_button->enable){
-                printf("SAHUT !\n");
+                game_window(name_player1,name_player2, grid_size);
             }
         }
         
