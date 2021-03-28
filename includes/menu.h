@@ -1,8 +1,6 @@
 #ifndef MENU_H
 #define MENU_H
 
-#define MENU_SCALE  2
-
 #include <MLV/MLV_all.h>
 #include "../includes/game.h"
 

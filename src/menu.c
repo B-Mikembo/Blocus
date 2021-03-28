@@ -229,7 +229,7 @@ void menu_window()
         10, 100,
         200, 30,
         MLV_COLOR_WHITE, MLV_COLOR_WHITE,
-        MLV_COLOR_ROYAL_BLUE, "jOUEUR 1 : ");
+        MLV_COLOR_ROYAL_BLUE, "JOUEUR 1 : ");
     texte1 = (char *)malloc(1 * sizeof(char));
     *texte1 = '\0';
     input_box_2 = MLV_create_input_box(
