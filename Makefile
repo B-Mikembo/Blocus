@@ -19,9 +19,7 @@ bin/menu.o : src/menu.c includes/window.h includes/menu.h
 
 bin/game.o : src/game.c includes/game.h includes/window.h 
 	$(CC) -c src/game.c $(CFLAGS) -o bin/game.o -g
-
-bin/game.o : src/game.c includes/window.h includes/menu.h includes/game.h
-	$(CC) -c src/game.c $(CFLAGS) -o bin/game.o
+	
 run : 
 	./main
 
