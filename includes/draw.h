@@ -4,7 +4,7 @@
 #include "grid.h"
 #include <MLV/MLV_all.h>
 
-#define GRID_SCALE 50
+#define GRID_SCALE 100
 
 /**
  * @brief Draw a single cell
