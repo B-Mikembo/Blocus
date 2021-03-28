@@ -7,8 +7,7 @@
 
 int main(int argc, char const *argv[])
 {
-    /*menu_window();*/
-    display_grid(18);
+    menu_window();
 
     return 0;
 }
