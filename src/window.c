@@ -29,10 +29,11 @@ int is_pressed_escape(){
 /**
  * @brief Dessine un bouton pour régler la taille de la grille
  */
-void draw_size_buttons(Size_Button *first_button, Size_Button *second_button){
+void draw_buttons(Button *first_button, Button *second_button, Button *play){
     
     MLV_draw_image(first_button->image,first_button->x_pos, first_button->y_pos);
     MLV_draw_image(second_button->image,second_button->x_pos, second_button->y_pos);
+    MLV_draw_adapted_text_box(play->x_pos, play->y_pos,play->message,0,MLV_COLOR_WHITE,MLV_COLOR_WHITE,MLV_COLOR_ROYAL_BLUE,MLV_TEXT_CENTER);
     MLV_actualise_window();
 }
 
