@@ -2,12 +2,14 @@
 #define GRID_H
 
 #include <stdlib.h>
+#include <MLV/MLV_all.h>
 
 typedef struct
 {
     int x_pos;
     int y_pos;
     int enabled;
+    MLV_Color backgroundColor;
 } Cell;
 
 typedef struct

@@ -16,6 +16,7 @@ void draw_rectangle(int x, int y){
         GRID_SCALE,
         MLV_COLOR_BLACK
     );
+
 }
 
 void draw_cell(Cell *cell){
@@ -31,5 +32,11 @@ void draw_grid(Grid *grid){
             draw_cell(&grid->cells[i][j]);
         }
     }
+    MLV_actualise_window();
+}
+
+void draw_image(MLV_Image *image, int x_pos, int y_pos){
+    assert(image != NULL);
+    MLV_draw_image(image, x_pos, y_pos);
     MLV_actualise_window();
 }

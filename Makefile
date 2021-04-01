@@ -32,6 +32,10 @@ bin/player.o : src/player.c
 run : 
 	./main
 
+rebuild :
+	make clean
+	make
+
 clean :
 	rm $(TARGETS)
 	rm bin/*

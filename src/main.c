@@ -8,7 +8,7 @@
 int main(int argc, char const *argv[])
 {
     /*menu_window();*/
-    game_window(NULL,NULL,9);
+    game_window("Brice","Zaki",9);
 
     return 0;
 }
