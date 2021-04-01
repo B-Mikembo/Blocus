@@ -38,6 +38,10 @@ void lock_cell(Grid *g, int x, int y){
     g->cells[x][y].available = 0;
 }
 
+void unlock_cell(Grid *g, int x, int y){
+    g->cells[x][y].available = 1;
+}
+
 void game_window(char *name_player1, char *name_player2, int grid_size)
 {
     /*close_window();*/
@@ -83,6 +87,7 @@ void game_window(char *name_player1, char *name_player2, int grid_size)
             {
                 if(available_cell(grid, x_pos, y_pos) == 1){
                     draw_cell(&grid->cells[last_x_pos1][last_y_pos1]);
+                    unlock_cell(grid, last_x_pos1, last_y_pos1);
                     draw_image(player1->image, x_pos * GRID_SCALE, y_pos * GRID_SCALE);
                     lock_cell(grid, x_pos, y_pos);
 
@@ -99,6 +104,7 @@ void game_window(char *name_player1, char *name_player2, int grid_size)
             {
                 if(available_cell(grid, x_pos, y_pos) == 1){
                     draw_cell(&grid->cells[last_x_pos2][last_y_pos2]);
+                    unlock_cell(grid, last_x_pos2, last_y_pos2);
                     draw_image(player2->image, x_pos * GRID_SCALE, y_pos * GRID_SCALE);
                     lock_cell(grid, x_pos, y_pos);
 
