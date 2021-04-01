@@ -6,7 +6,7 @@ Player *player2;
 MLV_Event event;
 MLV_Mouse_button mouseButton;
 
-int numTour = 0;
+int numTour = 1;
 
 void init_player(char *name1, char *name2)
 {
@@ -14,7 +14,9 @@ void init_player(char *name1, char *name2)
     player2 = (Player *)malloc(sizeof(Player));
 
     player1->name = name1;
+    player1->status = 1;
     player2->name = name2;
+    player2->status = 0;
 
     setNumPlayer(player1, 1);
     setNumPlayer(player2, 2);
@@ -23,6 +25,17 @@ void init_player(char *name1, char *name2)
     resizeImage(player1->image, GRID_SCALE, GRID_SCALE);
     setImagePlayer(player2, MLV_load_image("img/orange_man.png"));
     resizeImage(player2->image, GRID_SCALE, GRID_SCALE);
+}
+
+int available_cell(Grid *g, int x, int y){
+    if(g->cells[x][y].available == 1){
+        return 1;
+    }
+    return 0;
+}
+
+void lock_cell(Grid *g, int x, int y){
+    g->cells[x][y].available = 0;
 }
 
 void game_window(char *name_player1, char *name_player2, int grid_size)
@@ -49,6 +62,7 @@ void game_window(char *name_player1, char *name_player2, int grid_size)
 
     do
     {
+        printf("nombre de tour : %d\n", numTour);
         event = MLV_wait_event(
             NULL,
             NULL,
@@ -65,26 +79,41 @@ void game_window(char *name_player1, char *name_player2, int grid_size)
             int x_pos = x_pixel / GRID_SCALE;
             int y_pos = y_pixel / GRID_SCALE;
 
-            if ((numTour % 2) == 0)
+            if (player1->status == 1 )
             {
-                draw_cell(&grid->cells[last_x_pos1][last_y_pos1]);
-                draw_image(player1->image, x_pos * GRID_SCALE, y_pos * GRID_SCALE);
+                if(available_cell(grid, x_pos, y_pos) == 1){
+                    draw_cell(&grid->cells[last_x_pos1][last_y_pos1]);
+                    draw_image(player1->image, x_pos * GRID_SCALE, y_pos * GRID_SCALE);
+                    lock_cell(grid, x_pos, y_pos);
 
-                last_x_pos1 = x_pos;
-                last_y_pos1 = y_pos;
-                printf("Player 1\n");
+                    last_x_pos1 = x_pos;
+                    last_y_pos1 = y_pos;
+                    printf("Player 1 -> x_pos : %d   y_pos : %d\n", x_pos, y_pos);
+                    player1->status = 0;
+                    player2->status = 1;
+                    numTour++;
+                }
+                
             }
             else
             {
-                draw_cell(&grid->cells[last_x_pos2][last_y_pos2]);
-                draw_image(player2->image, x_pos * GRID_SCALE, y_pos * GRID_SCALE);
+                if(available_cell(grid, x_pos, y_pos) == 1){
+                    draw_cell(&grid->cells[last_x_pos2][last_y_pos2]);
+                    draw_image(player2->image, x_pos * GRID_SCALE, y_pos * GRID_SCALE);
+                    lock_cell(grid, x_pos, y_pos);
 
-                last_x_pos2 = x_pos;
-                last_y_pos2 = y_pos;
-                printf("Player 2\n");
+                    last_x_pos2 = x_pos;
+                    last_y_pos2 = y_pos;
+                    printf("Player 2 -> x_pos : %d   y_pos : %d\n", x_pos, y_pos);
+                    player2->status = 0;
+                    player1->status = 1;
+                    numTour++;
+                }
+
             }
 
-            numTour++;
+            
+            MLV_wait_milliseconds(100);
         }
 
     } while (!is_pressed_escape());

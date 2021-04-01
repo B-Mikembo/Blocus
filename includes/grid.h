@@ -8,7 +8,7 @@ typedef struct
 {
     int x_pos;
     int y_pos;
-    int enabled;
+    int available; /* 0 non 1 oui*/
     MLV_Color backgroundColor;
 } Cell;
 
