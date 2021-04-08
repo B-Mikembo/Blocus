@@ -17,6 +17,13 @@ void setImagePlayer(Player *player, MLV_Image *image){
 	player->image = image;
 }
 
+void setCrossPlayer(Player *player, MLV_Image *cross){
+	assert(player != NULL);
+	assert(cross != NULL);
+
+	player->cross = cross;
+}
+
 void displayPlayer(Player *player){
 	assert(player != NULL);
 	printf("Player [name = %s, numPlayers = %d]\n", player->name, player->numPlayer);
