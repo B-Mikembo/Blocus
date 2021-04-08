@@ -3,6 +3,7 @@
 
 #include "grid.h"
 #include <MLV/MLV_all.h>
+#include <assert.h>
 
 #define GRID_SCALE 100
 
@@ -18,6 +19,8 @@ void draw_cell(Cell *cell);
  * 
  */
 void draw_grid(Grid *grid);
+
+void draw_image(MLV_Image *image, int x_pos, int y_pos);
 
 
 

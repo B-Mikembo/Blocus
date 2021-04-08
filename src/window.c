@@ -37,6 +37,11 @@ void draw_buttons(Button *first_button, Button *second_button, Button *play){
     MLV_actualise_window();
 }
 
+void resizeImage(MLV_Image *image, int width, int height){
+    assert(image != NULL);
+    MLV_resize_image_with_proportions(image,width,height);
+}
+
 void free_image(MLV_Image *image){
     MLV_free_image(image);
 }

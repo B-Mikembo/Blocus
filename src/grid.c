@@ -17,7 +17,8 @@ Grid *create_grid(int size)
         for(i = 0; i < size; i++){
             grid->cells[i][j].x_pos = i;
             grid->cells[i][j].y_pos = j;
-            grid->cells[i][j].enabled = 1;
+            grid->cells[i][j].available = 1;
+            grid->cells[i][j].backgroundColor = NULL;
         }
     }
 
