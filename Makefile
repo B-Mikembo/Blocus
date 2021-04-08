@@ -3,6 +3,7 @@ TARGETS=main
 CFLAGS= -Wall -ansi `pkg-config --cflags MLV`
 LDFLAGS= `pkg-config --libs-only-other --libs-only-L MLV`
 LDLIBS= `pkg-config --libs-only-l MLV`
+OBJ= bin/main.o bin/menu.o bin/window.o bin/game.o bin/grid.o bin/draw.o bin/player.o
 
 
 main : $(OBJ)
