@@ -15,6 +15,8 @@ typedef struct {
 
 int getNumPlayer(Player *player);
 
+char *getUserName(Player *player);
+
 void setNumPlayer(Player *player, int num);
 
 void setImagePlayer(Player *player, MLV_Image *image);

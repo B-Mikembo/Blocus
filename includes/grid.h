@@ -30,4 +30,6 @@ Grid *create_grid(int size);
  */
 void free_grid(Grid *grid);
 
+int check_case_adjacente(Cell *source_cell, Cell *target_cell);
+
 #endif

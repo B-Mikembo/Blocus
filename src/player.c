@@ -5,6 +5,11 @@ int getNumPlayer(Player *player){
 	return player->numPlayer;
 }
 
+char *getUserName(Player *player){
+	assert(player != NULL);
+	return player->name;
+}
+
 void setNumPlayer(Player *player, int num){
 	assert(player != NULL);
 	player->numPlayer = num;
