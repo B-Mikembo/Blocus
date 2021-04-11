@@ -17,7 +17,7 @@ bin/window.o : src/window.c includes/window.h
 bin/menu.o : src/menu.c includes/window.h includes/menu.h 
 	$(CC) -c src/menu.c $(CFLAGS) -o bin/menu.o -g
 
-bin/game.o : src/game.c includes/game.h includes/window.h includes/draw.h includes/grid.h includes/player.h
+bin/game.o : src/game.c includes/game.h includes/window.h includes/draw.h includes/grid.h includes/player.h includes/constantes.h
 	$(CC) -c src/game.c $(CFLAGS) -o bin/game.o -g
 
 bin/grid.o : src/grid.c includes/grid.h includes/window.h 
