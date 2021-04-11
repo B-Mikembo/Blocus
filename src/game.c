@@ -10,13 +10,15 @@ MLV_Mouse_button mouseButton;
 int numTour = 1;
 int nextStep = 0;
 
-Player *createPlayer(char *name, int num, MLV_Image *image)
+Player *createPlayer(char *name, int num, MLV_Image *image, MLV_Image *crossImage)
 {
     Player *player = (Player *)malloc(sizeof(Player));
     player->name = name;
     player->numPlayer = num;
     player->image = image;
+    player->cross = crossImage;
     MLV_resize_image_with_proportions(player->image, TAILLE_BLOC, TAILLE_BLOC);
+    MLV_resize_image_with_proportions(player->cross, TAILLE_BLOC, TAILLE_BLOC);
     player->position = (PositionPlayer *)malloc(sizeof(PositionPlayer));
 
     return player;
@@ -53,23 +55,9 @@ void drawMap(int **map, int size)
     MLV_actualise_window();
 }
 
-int available_cell(Grid *g, int x, int y)
+int available_cell(int **map, int x, int y)
 {
-    if (g->cells[x][y].available == 1)
-    {
-        return 1;
-    }
-    return 0;
-}
-
-void lock_cell(Grid *g, int x, int y)
-{
-    g->cells[x][y].available = 0;
-}
-
-void unlock_cell(Grid *g, int x, int y)
-{
-    g->cells[x][y].available = 1;
+    return map[y][x] == VIDE;
 }
 
 int **createMap(int size)
@@ -110,28 +98,30 @@ void game_window(char *name_player1, char *name_player2, int grid_size)
 
     int **map = createMap(grid_size);
     drawMap(map, grid_size);
-    displayMap(map, grid_size);
     int continuer = 1;
     int tour = 1;
     MLV_Event event = MLV_NONE;
     MLV_Keyboard_button keyboardButton = MLV_NONE;
-    Player *player_1 = createPlayer(name_player1, 1, MLV_load_image("img/blue_man.png"));
-    Player *player_2 = createPlayer(name_player2, 2, MLV_load_image("img/orange_man.png"));
+    Player *player_1 = createPlayer(name_player1, 1, MLV_load_image("img/blue_man.png"), MLV_load_image("img/blue_cross.png"));
+    Player *player_2 = createPlayer(name_player2, 2, MLV_load_image("img/orange_man.png"), MLV_load_image("img/red_cross.png"));
     placementPlayer(player_1, map, grid_size);
     placementPlayer(player_2, map, grid_size);
-    displayMap(map, grid_size);
+
     do
     {
 
         printf("C'est au tour de %s de jouer\n", currentPlayer(player_1, player_2, tour)->name);
-        if(tour % 2 != 0){
-            movePlayer(map,player_1, grid_size);
+        if (tour % 2 != 0)
+        {
+            movePlayer(map, player_1, grid_size);
+            condamnationPlayer(map, grid_size, player_1);
         }
-        else{
-            movePlayer(map,player_2, grid_size);
+        else
+        {
+            movePlayer(map, player_2, grid_size);
+            condamnationPlayer(map, grid_size, player_2);
         }
         tour++;
-        displayMap(map, grid_size);
     } while (!is_pressed_escape());
 
     close_window();
@@ -250,36 +240,103 @@ void movePlayer(int **map, Player *player, int size)
                          * 
                          */
                         draw_image(player->image, xPosition * TAILLE_BLOC, yPosition * TAILLE_BLOC);
-                        if(player->numPlayer == 1){
+                        if (player->numPlayer == 1)
+                        {
                             map[yPosition][xPosition] = PLAYER_1;
                         }
-                        else{
+                        else
+                        {
                             map[yPosition][xPosition] = PLAYER_2;
                         }
                         player->position->x = xPosition;
                         player->position->y = yPosition;
                         nextStep = 1;
                     }
-                    else{
+                    else
+                    {
                         printf("Cette case n'est pas vide !\n");
                     }
                 }
-                else{
+                else
+                {
                     printf("Ce n'est pas une case adjacente !\n");
                 }
             }
-            else{
+            else
+            {
                 printf("Ce n'est pas une case de la grille\n!");
             }
+            
             MLV_wait_milliseconds(100);
         }
     } while (!nextStep);
 }
 
-void displayMap(int **map, int size){
+void condamnationPlayer(int **map, int size, Player *player)
+{
+    printf("%s, condamner une case libre\n", player->name);
+    int nextStep = 0;
+    MLV_Event condamnationEvent = MLV_NONE;
+    int xPixel;
+    int yPixel;
+    int xPosition;
+    int yPosition;
+    do
+    {
+        condamnationEvent = MLV_wait_event(
+            NULL,
+            NULL,
+            NULL,
+            NULL,
+            NULL,
+            &xPixel,
+            &yPixel,
+            NULL,
+            NULL);
+
+        if (condamnationEvent == MLV_MOUSE_BUTTON)
+        {
+            xPosition = xPixel / TAILLE_BLOC;
+            yPosition = yPixel / TAILLE_BLOC;
+            if (!isOutsideMap(xPosition, yPosition, size))
+            {
+
+                if (map[yPosition][xPosition] == VIDE)
+                {
+                    /**
+                         * @brief On rempli la case cible par le joueur de la même maniere mais en assignant PLAYER_1 ou PLAYER_2
+                         * 
+                         */
+                    draw_image(player->cross, xPosition * TAILLE_BLOC, yPosition * TAILLE_BLOC);
+                    if (player->numPlayer == 1)
+                    {
+                        map[yPosition][xPosition] = CROSS;
+                    }
+                    else
+                    {
+                        map[yPosition][xPosition] = CROSS;
+                    }
+                    nextStep = 1;
+                }
+                else
+                {
+                    printf("Cette case n'est pas vide !\n");
+                }
+            }
+            else
+            {
+                printf("Ce n'est pas une case de la grille\n!");
+            }
+        }
+    }while (!nextStep);
+}
+void displayMap(int **map, int size)
+{
     int i, j;
-    for(i = 0; i < size; i++){
-        for(j = 0; j < size; j++){
+    for (i = 0; i < size; i++)
+    {
+        for (j = 0; j < size; j++)
+        {
             printf("%d ", map[i][j]);
         }
         printf("\n");
