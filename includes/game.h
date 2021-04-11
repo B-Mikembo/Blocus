@@ -22,6 +22,7 @@ typedef struct
     PositionPlayer *position;
 } Player;
 
+void displayMap(int **map, int size);
 int **createMap(int size);
 Player *createPlayer(char *name, int num, MLV_Image *image);
 void game_window(char *name_player1, char *name_player2, int grid_size);

@@ -110,6 +110,7 @@ void game_window(char *name_player1, char *name_player2, int grid_size)
 
     int **map = createMap(grid_size);
     drawMap(map, grid_size);
+    displayMap(map, grid_size);
     int continuer = 1;
     int tour = 1;
     MLV_Event event = MLV_NONE;
@@ -118,14 +119,19 @@ void game_window(char *name_player1, char *name_player2, int grid_size)
     Player *player_2 = createPlayer(name_player2, 2, MLV_load_image("img/orange_man.png"));
     placementPlayer(player_1, map, grid_size);
     placementPlayer(player_2, map, grid_size);
-
+    displayMap(map, grid_size);
     do
     {
 
         printf("C'est au tour de %s de jouer\n", currentPlayer(player_1, player_2, tour)->name);
-
+        if(tour % 2 != 0){
+            movePlayer(map,player_1, grid_size);
+        }
+        else{
+            movePlayer(map,player_2, grid_size);
+        }
         tour++;
-
+        displayMap(map, grid_size);
     } while (!is_pressed_escape());
 
     close_window();
@@ -196,7 +202,7 @@ int isOutsideMap(int x, int y, int size)
 
 int isNearbyCase(Player *player, int x, int y)
 {
-    return (x >= player->position->x - 1 && x <= player->position->x + 1 && x != player->position->x) && (y >= player->position->y - 1 && y <= player->position->y + 1 && y != player->position->y);
+    return x >= player->position->x - 1 && x <= player->position->x + 1 && y >= player->position->y - 1 && y <= player->position->y + 1;
 }
 
 void movePlayer(int **map, Player *player, int size)
@@ -230,42 +236,52 @@ void movePlayer(int **map, Player *player, int size)
             {
                 if (isNearbyCase(player, xPosition, yPosition))
                 {
-                    if (map[xPosition][yPosition] == VIDE)
+                    if (map[yPosition][xPosition] == VIDE)
                     {
                         /**
                          * @brief On vide la case actuel du joueur en redessinant la case puis en lui assignant la valeur VIDE
                          * 
                          */
                         drawRectangle(player->position->x, player->position->y);
-                        map[player->position->x][player->position->y] == VIDE;
+                        map[player->position->y][player->position->x] = VIDE;
 
                         /**
                          * @brief On rempli la case cible par le joueur de la même maniere mais en assignant PLAYER_1 ou PLAYER_2
                          * 
                          */
-                        
+                        draw_image(player->image, xPosition * TAILLE_BLOC, yPosition * TAILLE_BLOC);
+                        if(player->numPlayer == 1){
+                            map[yPosition][xPosition] = PLAYER_1;
+                        }
+                        else{
+                            map[yPosition][xPosition] = PLAYER_2;
+                        }
+                        player->position->x = xPosition;
+                        player->position->y = yPosition;
+                        nextStep = 1;
+                    }
+                    else{
+                        printf("Cette case n'est pas vide !\n");
                     }
                 }
-
-                if (player->numPlayer == 1 && isNearbyCase(last_cell_player1, target))
-                {
-                    unlock_cell(grid, last_cell_player1->x_pos, last_cell_player1->y_pos);
-                    draw_image(player1->image, target->x_pos * TAILLE_BLOC, target->y_pos * TAILLE_BLOC);
-                    last_cell_player1 = target;
-                    lock_cell(grid, target->x_pos, target->y_pos);
-                    numTour++;
-                    nextStep = 1;
-                }
-                else if (isNearbyCase(last_cell_player2, target))
-                {
-                    unlock_cell(grid, last_cell_player2->x_pos, last_cell_player2->y_pos);
-                    draw_image(player2->image, target->x_pos * TAILLE_BLOC, target->y_pos * TAILLE_BLOC);
-                    last_cell_player2 = target;
-                    lock_cell(grid, target->x_pos, target->y_pos);
-                    numTour++;
-                    nextStep = 1;
+                else{
+                    printf("Ce n'est pas une case adjacente !\n");
                 }
             }
+            else{
+                printf("Ce n'est pas une case de la grille\n!");
+            }
+            MLV_wait_milliseconds(100);
         }
     } while (!nextStep);
+}
+
+void displayMap(int **map, int size){
+    int i, j;
+    for(i = 0; i < size; i++){
+        for(j = 0; j < size; j++){
+            printf("%d ", map[i][j]);
+        }
+        printf("\n");
+    }
 }
