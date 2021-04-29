@@ -296,5 +296,5 @@ void menu_window()
     free_button(three_button);
     free_button(nine_button);
     free_button(play_button);
-    close_window();
+    close_window(NULL, 0);
 }
