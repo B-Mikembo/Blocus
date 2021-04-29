@@ -122,8 +122,8 @@ void game_window(char *name_player1, char *name_player2, int grid_size)
             condamnationPlayer(map, grid_size, player_2);
         }
         tour++;
-    } while (!is_pressed_escape());
-
+        continuer = !isBlocked(currentPlayer(player_1, player_2, tour), map, grid_size);
+    } while (!is_pressed_escape() && continuer);
     close_window();
 }
 
@@ -330,6 +330,24 @@ void condamnationPlayer(int **map, int size, Player *player)
         }
     }while (!nextStep);
 }
+
+int isBlocked(Player *player, int **map, int size){
+    int x;
+    int y;
+
+    for(x = player->position->x - 1; x < player->position->x + 2; x++){
+        for(y = player->position->y - 1; y < player->position->y + 2; y++){
+            if(!isOutsideMap(x,y,size)){
+                if(map[y][x] == VIDE){
+                    return 0;
+                }
+            }
+        }
+    }
+
+    return 1;
+}
+
 void displayMap(int **map, int size)
 {
     int i, j;
