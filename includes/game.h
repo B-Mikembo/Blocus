@@ -35,6 +35,6 @@ void placementPlayer(Player *player, int **map, int size);
 void drawMap(int **map, int size);
 void drawRectangle(int x, int y);
 Player *currentPlayer(Player *player_1, Player *player_2, int tour);
-int isBlocked(Player *player, int **map, int size);
+int winTest(Player * player, int **map, int size);
 
 #endif

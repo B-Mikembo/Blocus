@@ -6,7 +6,7 @@ Player *player2;
 Cell *last_cell_player1;
 Cell *last_cell_player2;
 MLV_Mouse_button mouseButton;
-
+int continuer;
 int numTour = 1;
 int nextStep = 0;
 
@@ -98,10 +98,8 @@ void game_window(char *name_player1, char *name_player2, int grid_size)
 
     int **map = createMap(grid_size);
     drawMap(map, grid_size);
-    int continuer = 1;
+    continuer = 1;
     int tour = 1;
-    MLV_Event event = MLV_NONE;
-    MLV_Keyboard_button keyboardButton = MLV_NONE;
     Player *player_1 = createPlayer(name_player1, 1, MLV_load_image("img/blue_man.png"), MLV_load_image("img/blue_cross.png"));
     Player *player_2 = createPlayer(name_player2, 2, MLV_load_image("img/orange_man.png"), MLV_load_image("img/red_cross.png"));
     placementPlayer(player_1, map, grid_size);
@@ -109,21 +107,24 @@ void game_window(char *name_player1, char *name_player2, int grid_size)
 
     do
     {
-
-        printf("C'est au tour de %s de jouer\n", currentPlayer(player_1, player_2, tour)->name);
-        if (tour % 2 != 0)
+        displayMap(map, grid_size);
+        if (!winTest(currentPlayer(player_1, player_2, tour), map, grid_size))
         {
-            movePlayer(map, player_1, grid_size);
-            condamnationPlayer(map, grid_size, player_1);
+            printf("C'est au tour de %s de jouer\n", currentPlayer(player_1, player_2, tour)->name);
+            if (tour % 2 != 0)
+            {
+                movePlayer(map, player_1, grid_size);
+                condamnationPlayer(map, grid_size, player_1);
+            }
+            else
+            {
+                movePlayer(map, player_2, grid_size);
+                condamnationPlayer(map, grid_size, player_2);
+            }
+            tour++;
         }
-        else
-        {
-            movePlayer(map, player_2, grid_size);
-            condamnationPlayer(map, grid_size, player_2);
-        }
-        tour++;
-        continuer = !isBlocked(currentPlayer(player_1, player_2, tour), map, grid_size);
-    } while (!is_pressed_escape() && continuer);
+    } while (continuer);
+    printf("Fin de la partie !\n");
     close_window();
 }
 
@@ -266,7 +267,7 @@ void movePlayer(int **map, Player *player, int size)
             {
                 printf("Ce n'est pas une case de la grille\n!");
             }
-            
+
             MLV_wait_milliseconds(100);
         }
     } while (!nextStep);
@@ -328,23 +329,24 @@ void condamnationPlayer(int **map, int size, Player *player)
                 printf("Ce n'est pas une case de la grille\n!");
             }
         }
-    }while (!nextStep);
+    } while (!nextStep);
 }
 
-int isBlocked(Player *player, int **map, int size){
-    int x;
-    int y;
+int winTest(Player *player, int **map, int size)
+{
+    int x, y;
 
-    for(x = player->position->x - 1; x < player->position->x + 2; x++){
-        for(y = player->position->y - 1; y < player->position->y + 2; y++){
-            if(!isOutsideMap(x,y,size)){
-                if(map[y][x] == VIDE){
-                    return 0;
-                }
+    for (y = player->position->y - 1; y < player->position->y + 2; y++)
+    {
+        for (x = player->position->x - 1; x < player->position->x + 2; x++)
+        {
+            if (!isOutsideMap(x,y,size) && map[y][x] == VIDE)
+            {
+                return 0;
             }
         }
     }
-
+    continuer = 0;
     return 1;
 }
 
