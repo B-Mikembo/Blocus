@@ -56,3 +56,6 @@ dkms.conf
 
 # Exec
 main
+
+# Other files
+*.lvl

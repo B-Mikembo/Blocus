@@ -18,7 +18,7 @@ typedef struct {
 
 void create_window(const char* title, unsigned int width, unsigned int height);
 int is_pressed_escape();
-void close_window(int **map, int size);
+void close_window();
 void draw_buttons(Button *first_button, Button *second_button, Button *play);
 void resizeImage(MLV_Image *image, int width, int height);
 void free_image(MLV_Image *image);

@@ -119,9 +119,10 @@ void game_window(char *name_player1, char *name_player2, int grid_size)
             }
             tour++;
         }
+        sauvegarde(map, grid_size);
     } while (continuer);
     printf("Fin de la partie !\n");
-    close_window(map, grid_size);
+    close_window();
 }
 
 /**

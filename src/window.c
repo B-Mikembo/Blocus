@@ -46,7 +46,6 @@ void free_image(MLV_Image *image){
     MLV_free_image(image);
 }
 
-void close_window(int **map, int size){
-    sauvegarde(map, size);
+void close_window(){
     MLV_free_window();
 }
