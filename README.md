@@ -15,5 +15,9 @@ Dans une partie à un seul joueur, le programme simule le deuxième joueur. Il n
  - Création de la branche depuis la branche **main** avec la commande ***git checkout -b nom_de_la_branche main***
  - Puis **CODONS !!!**
 ## Commit
+ - Rédaction d'un message du commit explicite (en rapport avec le ticket) permettant de faire le suivi du ticket (branche)
+ - Puis exécution de la commande ***git push origin nom_de_le_branche***
 ## Pull Request
+ - Après le **pull**, nous créons une pull request afin de pouvoir faire une vérification de la validité du nouveau code de la part de git
 ## Review & Merge
+ - Nous faisons une **review** du code de l'autre pour comprendre la logique mais également pour refactoriser le code si nécesaire
