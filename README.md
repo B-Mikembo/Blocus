@@ -6,3 +6,10 @@ Une fois le terrain mis en place, les joueurs alternent les tours. Durant le tou
 L'interface du jeu sera contrôlée entièrement à la souris et consistera en trois écrans. Le premier écran proposera de choisir la taille du terrain de jeu, et de démarrer une partie à un ou deux joueurs. Le deuxième écran permet de jouer la partie. Le troisième écran affiche le gagnant et permet de choisir entre terminer le programme et lancer une nouvelle partie.
 
 Dans une partie à un seul joueur, le programme simule le deuxième joueur. Il n'a pas besoin de jouer brillamment, mais ses choix doivent respecter les règles du jeu. 
+
+# Cycle de Développement
+
+## Création de la branche
+## Commit
+## Pull Request
+## Review & Merge
