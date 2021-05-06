@@ -13,7 +13,7 @@ Dans une partie à un seul joueur, le programme simule le deuxième joueur. Il n
  - Prise en charge du ticket sur le Trello
  - Exécution de la commande ***git pull origin main*** pour mettre à jour notre dépôt local
  - Création de la branche depuis la branche **main** avec la commande ***git checkout -b nom_de_la_branche main***
- - Puis **CODONS**
+ - Puis **CODONS !!!**
 ## Commit
 ## Pull Request
 ## Review & Merge
