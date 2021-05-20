@@ -1,10 +1,7 @@
 #include "../includes/game.h"
 
-Grid *grid;
 Player *player1;
 Player *player2;
-Cell *last_cell_player1;
-Cell *last_cell_player2;
 MLV_Mouse_button mouseButton;
 int continuer;
 int numTour = 1;
@@ -94,8 +91,7 @@ Player *currentPlayer(Player *player_1, Player *player_2, int tour)
 
 void game_window(char *name_player1, char *name_player2, int grid_size)
 {
-    create_window("Blocus", TAILLE_BLOC * grid_size, TAILLE_BLOC * grid_size);
-
+    create_window("Blocus", TAILLE_BLOC * grid_size + 100, TAILLE_BLOC * grid_size);
     int **map = createMap(grid_size);
     drawMap(map, grid_size);
     continuer = 1;
@@ -123,6 +119,7 @@ void game_window(char *name_player1, char *name_player2, int grid_size)
             }
             tour++;
         }
+        sauvegarde(map, grid_size);
     } while (continuer);
     printf("Fin de la partie !\n");
     close_window();

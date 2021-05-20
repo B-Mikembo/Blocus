@@ -3,10 +3,9 @@
 
 #include <MLV/MLV_all.h>
 
-#include "../includes/window.h"
-#include "../includes/draw.h"
-#include "../includes/grid.h"
-#include "../includes/constantes.h"
+#include "window.h"
+#include "constantes.h"
+#include "draw.h"
 
 typedef struct
 {

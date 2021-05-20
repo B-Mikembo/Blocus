@@ -18,7 +18,7 @@ char *name_player2;
 
 void free_button(Button *button)
 {
-    MLV_free_image(button->image);
+    MLV_free_image(image(button));
     free(button);
 }
 
@@ -28,9 +28,9 @@ void free_button(Button *button)
 int check_into_play_button(int x_pos, int y_pos){
     int result = 0;
 
-    if (x_pos >= play_button->x_pos && x_pos <= (play_button->x_pos + play_button->width))
+    if (x_pos >= x(play_button) && x_pos <= (x(play_button) + width(play_button)))
     {
-        if (y_pos >= play_button->y_pos && y_pos <= (play_button->y_pos + play_button->height))
+        if (y_pos >= y(play_button) && y_pos <= (y(play_button) + height(play_button)))
         {
             result = 1;
         }
@@ -50,9 +50,9 @@ int check_into_three_button(int x_pos, int y_pos)
 {
     int result = 0;
 
-    if (x_pos >= three_button->x_pos && x_pos <= (three_button->x_pos + three_button->width))
+    if (x_pos >= x(three_button) && x_pos <= (x(three_button) + width(three_button)))
     {
-        if (y_pos >= three_button->y_pos && y_pos <= (three_button->y_pos + three_button->height))
+        if (y_pos >= y(three_button) && y_pos <= (y(three_button) + height(three_button)))
         {
             result = 1;
         }
@@ -72,9 +72,9 @@ int check_into_nine_button(int x_pos, int y_pos)
 {
     int result = 0;
 
-    if (x_pos >= nine_button->x_pos && x_pos <= (nine_button->x_pos + nine_button->width))
+    if (x_pos >= x(nine_button) && x_pos <= (x(nine_button) + width(nine_button)))
     {
-        if (y_pos >= nine_button->y_pos && y_pos <= (nine_button->y_pos + nine_button->height))
+        if (y_pos >= y(nine_button) && y_pos <= (y(nine_button) + height(nine_button)))
         {
             result = 1;
         }
@@ -101,7 +101,7 @@ int get_value_of_size_button(int x_pos, int y_pos)
      */
     if (check_into_three_button(x_pos, y_pos))
     {
-        size = three_button->value;
+        size = value(three_button);
     }
 
     /**
@@ -110,7 +110,7 @@ int get_value_of_size_button(int x_pos, int y_pos)
      */
     if (check_into_nine_button(x_pos, y_pos))
     {
-        size = nine_button->value;
+        size = value(nine_button);
     }
 
     return size;
@@ -125,36 +125,36 @@ void init_size_buttons()
     /**
      * Allocation de mémoire pour les boutons
     */
-    three_button = (Button *)malloc(sizeof(Button));
-    nine_button = (Button *)malloc(sizeof(Button));
-    play_button = (Button *)malloc(sizeof(Button));
+    three_button = createButton();
+    nine_button = createButton();
+    play_button = createButton();
 
-    int width = WIDTH;
-    int height = HEIGHT;
+    int widthBlock = WIDTH;
+    int heightBlock = HEIGHT;
 
     /**
      * Initialisation du bouton "3"
     */
-    three_button->value = 3;
-    three_button->height = height / 4;
-    three_button->width = width / 4;
-    three_button->image = MLV_load_image("img/three.png");
-    three_button->x_pos = width / 8;
-    three_button->y_pos = height / 2;
-    three_button->enable = 1;
+    setValue(three_button, 3);
+    setHeight(three_button, (heightBlock / 4));
+    setWidth(three_button, (widthBlock/4));
+    setImage(three_button, MLV_load_image("img/three.png"));
+    setX(three_button, (widthBlock / 8));
+    setY(three_button, (heightBlock / 2));
+    setEnable(three_button, 1);
 
-    MLV_resize_image_with_proportions(three_button->image, three_button->width, three_button->height);
+    MLV_resize_image_with_proportions(three_button->image, width(three_button), height(three_button));
 
     /**
      * Initialisation du bouton "9"
     */
-    nine_button->value = 9;
-    nine_button->height = height / 4;
-    nine_button->width = width / 4;
-    nine_button->image = MLV_load_image("img/nine.png");
-    nine_button->x_pos = (width / 2) + (width / 8);
-    nine_button->y_pos = height / 2;
-    nine_button->enable = 1;
+    setValue(nine_button, 9);
+    setHeight(nine_button, (heightBlock / 4));
+    setWidth(nine_button, (widthBlock / 4));
+    setImage(nine_button, MLV_load_image("img/nine.png"));
+    setX(nine_button, ((widthBlock / 2) + (widthBlock / 8)));
+    setY(nine_button, (heightBlock / 2));
+    setEnable(nine_button, 1);
 
     MLV_resize_image_with_proportions(nine_button->image, nine_button->width, nine_button->height);
 
@@ -163,15 +163,16 @@ void init_size_buttons()
     */
     int width_box = 0;
     int height_box = 0;
-    play_button->message = "JOUER";
+    int xPlayButton = (x(three_button)+width(three_button));
+    int yPlayButton = height - (heightBlock / 4);
+    setMessage(play_button, "JOUER");
     MLV_get_size_of_adapted_text_box(play_button->message,0,&width_box, &height_box);
-    play_button->value = 1;
-    play_button->height = height_box;
-    play_button->width = width_box;
-    play_button->image = NULL;
-    play_button->x_pos = (three_button->x_pos+three_button->width);
-    play_button->y_pos = height - (height / 4);
-    play_button->enable = 0;
+    setValue(play_button, 1);
+    setHeight(play_button, height_box);
+    setWidth(play_button, width_box);
+    setX(play_button, xPlayButton);
+    setY(play_button, yPlayButton);
+    setEnable(play_button, 0);
     
 
 }
@@ -277,6 +278,7 @@ void menu_window()
             }
             
             if(check_into_play_button(x_pixel, y_pixel) && play_button->enable){
+                close_window();
                 game_window(name_player1,name_player2, grid_size);
             }
         }

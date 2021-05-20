@@ -7,6 +7,7 @@
 
 int main(int argc, char const *argv[])
 {
-    game_window("Brice","Zaki",3);
+    /* game_window("Brice","Zaki",3); */
+    menu_window();
     return 0;
 }
