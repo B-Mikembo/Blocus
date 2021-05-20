@@ -24,14 +24,9 @@ void draw_cell(Cell *cell){
     MLV_actualise_window();
 }
 
-void draw_grid(Grid *grid){
-    int i;
-    int j;
-    for(i = 0; i < grid->size; i++){
-        for(j = 0; j < grid->size; j++){
-            draw_cell(&grid->cells[i][j]);
-        }
-    }
+void draw_image(MLV_Image *image, int x_pos, int y_pos){
+    assert(image != NULL);
+    MLV_draw_image(image, x_pos, y_pos);
     MLV_actualise_window();
 }
 
