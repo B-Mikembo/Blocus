@@ -10,14 +10,13 @@
  * @brief Fenêtre de fin
  * 
  */
-void end_window(char* winner)
+void end_window(char *winner)
 {
-    char* end_text = strcat("THANKS FOR PLAYING\n\n\n\nTHE WINNER IS ", winner);
-    printf("%s", end_text);
+    /*char* end_text = strcat("THANKS FOR PLAYING\n\n\n\nTHE WINNER IS ", winner);*/
     create_window("End Game", 500, 500);
     MLV_draw_adapted_text_box(
         175, 200,
-        end_text,
+        "THANKS FOR PLAYING\n\n\n\nTHE WINNER IS " + winner,
         9,
         MLV_COLOR_ROYAL_BLUE, MLV_COLOR_WHITE, MLV_COLOR_ROYAL_BLUE,
         MLV_TEXT_CENTER);

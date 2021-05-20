@@ -4,6 +4,6 @@
 #include <MLV/MLV_all.h>
 #include "../includes/game.h"
 
-void end_window(char* winner);
+void end_window(char *winner);
 
 #endif
