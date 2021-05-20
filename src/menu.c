@@ -278,6 +278,7 @@ void menu_window()
             }
             
             if(check_into_play_button(x_pixel, y_pixel) && play_button->enable){
+                close_window();
                 game_window(name_player1,name_player2, grid_size);
             }
         }
