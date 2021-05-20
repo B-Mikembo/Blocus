@@ -30,8 +30,8 @@ void draw_image(MLV_Image *image, int x_pos, int y_pos){
     MLV_actualise_window();
 }
 
-void draw_image(MLV_Image *image, int x_pos, int y_pos){
+/*void draw_image(MLV_Image *image, int x_pos, int y_pos){
     assert(image != NULL);
     MLV_draw_image(image, x_pos, y_pos);
     MLV_actualise_window();
-}
+}*/

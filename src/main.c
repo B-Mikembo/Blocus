@@ -4,10 +4,12 @@
 
 #include "../includes/menu.h"
 #include "../includes/game.h"
+#include "../includes/end.h"
 
 int main(int argc, char const *argv[])
 {
     /* game_window("Brice","Zaki",3); */
-    menu_window();
+    /*menu_window();*/
+    end_window("Zaki");
     return 0;
 }
