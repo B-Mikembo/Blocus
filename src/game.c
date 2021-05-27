@@ -93,7 +93,7 @@ Player *currentPlayer(Player *player_1, Player *player_2, int tour)
 
 void game_window(char *name_player1, char *name_player2, int grid_size)
 {
-    create_window("Blocus", TAILLE_BLOC * grid_size + 100, TAILLE_BLOC * grid_size);
+    create_window("Blocus", TAILLE_BLOC * grid_size, TAILLE_BLOC * grid_size);
     int **map = createMap(grid_size);
     drawMap(map, grid_size);
     continuer = 1;
@@ -145,6 +145,7 @@ void game_window(char *name_player1, char *name_player2, int grid_size)
  */
 void placementPlayer(Player *player, int **map, int size)
 {
+    displayMap(map, size);
     printf("%s, veuillez placer votre pion sur la grille\n", player->name);
     int nextStep = 0;
     int xPixel;
@@ -171,16 +172,16 @@ void placementPlayer(Player *player, int **map, int size)
             y_position = yPixel / TAILLE_BLOC;
             if (x_position >= 0 && x_position < size && y_position >= 0 && y_position < size)
             {
-                if (map[x_position][y_position] == VIDE)
+                if (map[y_position][x_position] == VIDE)
                 {
 
                     if (player->numPlayer == 1)
                     {
-                        map[x_position][y_position] = PLAYER_1;
+                        map[y_position][x_position] = PLAYER_1;
                     }
                     else
                     {
-                        map[x_position][y_position] = PLAYER_2;
+                        map[y_position][x_position] = PLAYER_2;
                     }
                     draw_image(player->image, x_position * TAILLE_BLOC, y_position * TAILLE_BLOC);
                     player->position->x = x_position;
