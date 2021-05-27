@@ -8,8 +8,8 @@
 
 int main(int argc, char const *argv[])
 {
-    /* game_window("Brice","Zaki",3); */
-    /*menu_window();*/
-    end_window("Zaki");
+    /*game_window("Brice","Zaki",3); */
+    menu_window();
+    /*end_window("Zaki");*/
     return 0;
 }
