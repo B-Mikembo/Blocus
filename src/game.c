@@ -1,7 +1,9 @@
 #include "../includes/game.h"
 
+
 Player *player1;
 Player *player2;
+char *winner;
 MLV_Mouse_button mouseButton;
 int continuer;
 int numTour = 1;
@@ -121,8 +123,17 @@ void game_window(char *name_player1, char *name_player2, int grid_size)
         }
         sauvegarde(map, grid_size);
     } while (continuer);
+    if(tour% 2 == 0){
+        winner = player_1->name;
+    }
+    else{
+        winner = player_2->name;
+    }
     printf("Fin de la partie !\n");
     close_window();
+    
+    printf("winner is %s\n",winner);
+    end_window(winner);
 }
 
 /**

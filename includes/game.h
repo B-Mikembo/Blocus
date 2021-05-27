@@ -6,6 +6,7 @@
 #include "window.h"
 #include "constantes.h"
 #include "draw.h"
+#include "end.h"
 
 typedef struct
 {
