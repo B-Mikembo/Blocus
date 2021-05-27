@@ -12,7 +12,7 @@
  */
 void end_window(char *winner)
 {
-    strcat(winner, " IS THE WINNER\n\n\n\nTHANKS FOR PLAYING");
+    strcat(winner, " IS THE WINNER\n\n\n\nTHANKS FOR PLAYING\0");
     create_window("End Game", 500, 500);
     MLV_draw_adapted_text_box(
         175, 200,
