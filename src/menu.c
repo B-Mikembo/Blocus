@@ -164,7 +164,7 @@ void init_size_buttons()
     int width_box = 0;
     int height_box = 0;
     int xPlayButton = (x(three_button)+width(three_button));
-    int yPlayButton = height - (heightBlock / 4);
+    int yPlayButton = heightBlock - (heightBlock / 4);
     setMessage(play_button, "JOUER");
     MLV_get_size_of_adapted_text_box(play_button->message,0,&width_box, &height_box);
     setValue(play_button, 1);
