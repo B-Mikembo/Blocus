@@ -8,17 +8,12 @@
 #define GRID_SCALE 100
 
 /**
- * @brief Draw a single cell
+ * @brief Dessine une image à la postion (x,y)
  * 
- * @param cell 
+ * @param image image à afficher
+ * @param x_pos postion x de l'image (haut a gauche)
+ * @param y_pos postion y de l'image (haut a gauche)
  */
-void draw_cell(Cell *cell);
-
-/**
- * @brief Draw the entire grid
- * 
- */
-void draw_grid(Grid *grid);
 
 void draw_image(MLV_Image *image, int x_pos, int y_pos);
 

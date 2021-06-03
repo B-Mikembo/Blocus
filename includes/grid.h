@@ -4,6 +4,11 @@
 #include <stdlib.h>
 #include <MLV/MLV_all.h>
 
+/**
+ * @brief Crée une cellule
+ * 
+ */
+
 typedef struct
 {
     int x_pos;
@@ -12,6 +17,11 @@ typedef struct
     MLV_Color backgroundColor;
 } Cell;
 
+/**
+ * @brief crée une grille
+ * 
+ */
+
 typedef struct
 {
     Cell **cells;
@@ -19,15 +29,17 @@ typedef struct
 } Grid;
 
 /**
- * @brief Allocate memory for a grid and initialize each cell
+ * @brief Crée une grille de taille indiquée
  * 
  */
+
 Grid *create_grid(int size);
 
 /**
- * @brief Free memory for a grid
+ * @brief Libère la grille
  * 
  */
+
 void free_grid(Grid *grid);
 
 int check_case_adjacente(Cell *source_cell, Cell *target_cell);
