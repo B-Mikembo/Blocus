@@ -15,10 +15,16 @@ typedef struct {
 	int block; /* 1 = joueur doit bloquer une case 0 = il ne fait rien */
 } Player;
 
+/**
+ * Getters
+*/
 int getNumPlayer(Player *player);
 
 char *getUserName(Player *player);
 
+/**
+ * Setters
+*/
 void setNumPlayer(Player *player, int num);
 
 void setImagePlayer(Player *player, MLV_Image *image);

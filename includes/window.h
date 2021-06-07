@@ -16,15 +16,35 @@ typedef struct {
     char *message;
 } Button;
 
+/**
+ * Function to create Button
+*/
 Button *createButton();
+/**
+ * function to create window
+*/
 void create_window(const char* title, unsigned int width, unsigned int height);
+
+/**
+ * function which verify if escape button is pressed
+*/
 int is_pressed_escape();
+
+/**
+ * function to close current window
+*/
 void close_window();
-
-MLV_Image *image(Button *image);
-
+/**
+ * function which draw buttons
+*/
 void draw_buttons(Button *first_button, Button *second_button, Button *play);
+/**
+ * function which resize image
+*/
 void resizeImage(MLV_Image *image, int width, int height);
+/**
+ * function to free image
+*/
 void free_image(MLV_Image *image);
 
 /**
